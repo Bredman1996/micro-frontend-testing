@@ -1,0 +1,6 @@
+{
+    "imports":{
+        "child-one": "http://localhost:4201/main.js",
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.3.4/lib/system/single-spa.min.js"
+    }
+}
