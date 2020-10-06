@@ -14,19 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.0.0/extras/amd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.0.0/extras/named-exports.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/4.0.0/extras/named-register.min.js"></script>
-  <script>
-    Promise.all([System.import('single-spa')])
-    .then(([singleSpa]) => {
-      const { registerApplication, start } = singleSpa;
-      registerApplication({
-        name: "child-one",
-        app: () => System.import("child-one"),
-        activeWhen: '/child-one'
-      });
-
-      start();
-    });
-  </script>
+  <script src="/assets/startup.js"> </script>
 </head>
 <body>
   <app-root></app-root>
