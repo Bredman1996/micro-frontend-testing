@@ -48,11 +48,11 @@ Promise.all(appLoadPromises).then(() => {
   document.head.appendChild(script);
   System.import('single-spa').then((singleSpa) => {
     const { registerApplication, start } = singleSpa;
-    apps.forEach( (e) => {
+    apps.forEach( (app) => {
       registerApplication({
-        name: e.name,
-        app: () => System.import(e.name),
-        activeWhen: e.activeWhen
+        name: app.name,
+        app: () => System.import(app.name),
+        activeWhen: app.activeWhen
       });
     });
     start();
