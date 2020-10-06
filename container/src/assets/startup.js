@@ -1,9 +1,9 @@
-let appUrls =
+let apps =
   [
     {
-      "appName": "child-one",
+      "name": "child-one",
       "activeWhen":"/child-one",
-      "appUrl": "http://localhost:4201/",
+      "url": "http://localhost:4201/",
       "bundleMapsUrl":"http://localhost:4201/assets/bundle-maps.json",
       "mainBundleName": ""
     }
@@ -11,7 +11,7 @@ let appUrls =
 
 let appLoadPromises = [];
 
-appUrls.forEach((appInfo) => {
+apps.forEach((appInfo) => {
   appLoadPromises.push(new Promise((resolve, reject) => {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", `${appInfo.bundleMapsUrl}`);
@@ -39,8 +39,8 @@ let importmaps = {
 }
 
 Promise.all(appLoadPromises).then(() => {
-  appUrls.forEach(e => {
-    importmaps.imports[e.appName] = `${e.appUrl}/${e.mainBundleName}`;
+  apps.forEach(app => {
+    importmaps.imports[app.name] = `${app.url}/${app.mainBundleName}`;
   });
   let script = document.createElement('script');
   script.type = "systemjs-importmap";
@@ -48,10 +48,10 @@ Promise.all(appLoadPromises).then(() => {
   document.head.appendChild(script);
   System.import('single-spa').then((singleSpa) => {
     const { registerApplication, start } = singleSpa;
-    appUrls.forEach( (e) => {
+    apps.forEach( (e) => {
       registerApplication({
-        name: e.appName,
-        app: () => System.import(e.appName),
+        name: e.name,
+        app: () => System.import(e.name),
         activeWhen: e.activeWhen
       });
     });
