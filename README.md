@@ -4,19 +4,19 @@ Repo for learning and experimenting with micro frontends.
 # Getting started
 1. Clone the Repo
 2. Run:
-  - npm run start in the child-one directory
-  - npm run start in the container directory
+   - npm run start in the child-one directory
+   - npm run start in the container directory
 
 # Adding more child apps
 1. Create your child application using create-single-spa in the root directory
 2. Add a json file to the assets folder with a mapping to your main.js file
-  - Should be something like { "main":"main.js" } 
+   - Should be something like { "main":"main.js" } 
 2. Update the startup.js file in the container app with a new object in the apps array  
-  - name is the name of the app  
-  - activeWhen is the base url path for when this child app should be loaded  
-  - url is the base url for the app.  
-  - bundleMapsUrl is the full url for the json file created in step 2  
-  - mainBundleName is the name of the main bundle, this should be left blank as it will be populated later in the startup.js script  
+   - name is the name of the app  
+   - activeWhen is the base url path for when this child app should be loaded  
+   - url is the base url for the app.  
+   - bundleMapsUrl is the full url for the json file created in step 2  
+   - mainBundleName is the name of the main bundle, this should be left blank as it will be populated later in the startup.js script  
 3. Update routes in the container app to have a route that catches the child apps routes
 
 # Startup.js
