@@ -1,3 +1,4 @@
+
 let apps =
   [
     {
@@ -48,6 +49,11 @@ Promise.all(appLoadPromises).then(() => {
   document.head.appendChild(script);
   System.import('single-spa').then((singleSpa) => {
     const { registerApplication, start } = singleSpa;
+    registerApplication({
+      name: 'styleguide',
+      app: () => System.import('styleguide'),
+      activeWhen: "/"
+    });
     apps.forEach( (app) => {
       registerApplication({
         name: app.name,
@@ -55,6 +61,7 @@ Promise.all(appLoadPromises).then(() => {
         activeWhen: app.activeWhen
       });
     });
+
     start();
   });
 });
