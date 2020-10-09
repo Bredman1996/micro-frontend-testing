@@ -6,6 +6,7 @@ Repo for learning and experimenting with micro frontends.
 2. Run:
    - npm run start in the child-one directory
    - npm run start in the container directory
+   - npm run start in the styleguide directory
 
 # Adding more child apps
 1. Create your child application using create-single-spa in the root directory
@@ -21,3 +22,6 @@ Repo for learning and experimenting with micro frontends.
 
 # Startup.js
 This file iterates through the list of apps specified in the apps array, and will get the json specified in the bundleMapsUrl property of the app. This allows for publishing bundles with unique hash names without requiring a release of the container app. Once it has gotten all of the app mainjs bundle names and added them to the appinfo object, it will iterate thorugh the array again, this time creating an "imports" oobject. This is used to setup the SystemJS import map overrides. Once we have appended the import map overrides to the head of the dom, it will import single-spa, register all the apps specified with single-spa and then start single-spa. 
+
+# The Styleguide
+The styleguide application is intended to be an example of sharing components between different applications. These components are defined and registered in the styleguide application, and then imported and utilized in the required application. 
