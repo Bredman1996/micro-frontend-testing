@@ -7,39 +7,48 @@ let apps =
       "url": "http://localhost:4201/",
       "bundleMapsUrl":"http://localhost:4201/assets/bundle-maps.json",
       "mainBundleName": ""
+    },
+    {
+      "name":"styleguide",
+      "activeWhen":"/",
+      "url":"http://localhost:4202",
+      "bundleMapsUrl":"http://localhost:4202/assets/bundle-maps.json",
+      "mainBundleName":""
     }
   ];
 
 let appLoadPromises = [];
+System.import('@angular/common').then(() => {
 
-apps.forEach((appInfo) => {
-  appLoadPromises.push(new Promise((resolve, reject) => {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", `${appInfo.bundleMapsUrl}`);
-    xmlHttp.setRequestHeader('cache-control', 'no-cache, must-revalidate, post-check=0, pre-check=0');
-    xmlHttp.setRequestHeader('cache-control', 'max-age=0');
-    xmlHttp.setRequestHeader('expires', '0');
-    xmlHttp.setRequestHeader('expires', 'Tue, 01 Jan 1980 1:00:00 GMT');
-    xmlHttp.setRequestHeader('pragma', 'no-cache');
-    xmlHttp.send(null);
-    xmlHttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        let bundleMaps = JSON.parse(xmlHttp.responseText);
-        console.log(bundleMaps.main);
-        appInfo.mainBundleName = bundleMaps.main;
-        resolve();
-      }
-    };
-  }))
-})
-
-let importmaps = {
-  "imports":{
-
+  apps.forEach((appInfo) => {
+    appLoadPromises.push(new Promise((resolve, reject) => {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", `${appInfo.bundleMapsUrl}`);
+      xmlHttp.setRequestHeader('cache-control', 'no-cache, must-revalidate, post-check=0, pre-check=0');
+      xmlHttp.setRequestHeader('cache-control', 'max-age=0');
+      xmlHttp.setRequestHeader('expires', '0');
+      xmlHttp.setRequestHeader('expires', 'Tue, 01 Jan 1980 1:00:00 GMT');
+      xmlHttp.setRequestHeader('pragma', 'no-cache');
+      xmlHttp.send(null);
+      xmlHttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let bundleMaps = JSON.parse(xmlHttp.responseText);
+          console.log(bundleMaps.main);
+          appInfo.mainBundleName = bundleMaps.main;
+          resolve();
+        }
+      };
+    }))
+  })
+});
+  
+  let importmaps = {
+    "imports":{
+      
+    }
   }
-}
-
-Promise.all(appLoadPromises).then(() => {
+  
+  Promise.all(appLoadPromises).then(() => {
   apps.forEach(app => {
     importmaps.imports[app.name] = `${app.url}/${app.mainBundleName}`;
   });
@@ -49,11 +58,6 @@ Promise.all(appLoadPromises).then(() => {
   document.head.appendChild(script);
   System.import('single-spa').then((singleSpa) => {
     const { registerApplication, start } = singleSpa;
-    registerApplication({
-      name: 'styleguide',
-      app: () => System.import('styleguide'),
-      activeWhen: "/"
-    });
     apps.forEach( (app) => {
       registerApplication({
         name: app.name,

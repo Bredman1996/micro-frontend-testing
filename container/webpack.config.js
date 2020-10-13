@@ -1,3 +1,3 @@
 module.exports = {
-    externals: /^@angular/
+    externals: [/^@angular/]
 }

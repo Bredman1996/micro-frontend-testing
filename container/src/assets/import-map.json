@@ -1,6 +1,15 @@
 {
     "imports":{
         "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.3.4/lib/system/single-spa.min.js",
-        "styleguide": "http://localhost:4202/main.js"
+        "@angular/router":"https://cdn.jsdelivr.net/npm/@angular/router@10.1.5/bundles/router.umd.js",
+        "@angular/core":"https://unpkg.com/@angular/core@10.1.4/bundles/core.umd.js",
+        "rxjs":"https://unpkg.com/rxjs@6.6.3/bundles/rxjs.umd.min.js",
+        "@angular/common":"https://cdn.jsdelivr.net/npm/@angular/common@10.1.4/bundles/common.umd.js",
+        "rxjs/operators":"https://unpkg.com/rxjs@6.6.3/bundles/rxjs.umd.min.js",
+        "@angular/platform-browser":"https://cdn.jsdelivr.net/npm/@angular/platform-browser@10.1.4/bundles/platform-browser.umd.js",
+        "@angular/compiler":"https://cdn.jsdelivr.net/npm/@angular/compiler@10.1.4/bundles/compiler.umd.js",
+        "@angular/animations":"https://cdn.jsdelivr.net/npm/@angular/animations@10.1.4/bundles/animations.umd.js",
+        "@angular/platform-browser-dynamic":"https://cdn.jsdelivr.net/npm/@angular/platform-browser-dynamic@10.1.4/bundles/platform-browser-dynamic.umd.js",
+        "@angular/forms": "https://cdn.jsdelivr.net/npm/@angular/forms@10.1.5/bundles/forms.umd.js"
     }
 }

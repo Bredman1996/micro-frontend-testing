@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
@@ -16,12 +17,17 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'test',
+    component: TestComponent
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }
 ];
 
 @NgModule({
+  declarations: [TestComponent],
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
