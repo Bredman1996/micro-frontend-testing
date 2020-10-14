@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "postinstall": "ngcc",
     "build:single-spa:child-one": "ng build child-one --prod --deploy-url http://localhost:4201/",
     "serve:single-spa:child-one": "ng s --project child-one --disable-host-check --port 4201 --deploy-url http://localhost:4201/ --live-reload false"
   },
