@@ -1,4 +1,3 @@
-
 let apps =
   [
     {
@@ -45,24 +44,29 @@ let importmaps = {
   }
 }
 
-Promise.all(appLoadPromises).then(() => {
-  apps.forEach(app => {
-    importmaps.imports[app.name] = `${app.url}/${app.mainBundleName}`;
-  });
-  let script = document.createElement('script');
-  script.type = "systemjs-importmap";
-  script.text = JSON.stringify(importmaps);
-  document.head.appendChild(script);
-  System.import('single-spa').then((singleSpa) => {
-    const { registerApplication, start } = singleSpa;
-    apps.forEach((app) => {
-      registerApplication({
-        name: app.name,
-        app: () => System.import(app.name),
-        activeWhen: app.activeWhen
-      });
+// System.import('angularCommon').then((m) => {
+//   console.log(m);
+//   System.register('@angular/common', m);
+  Promise.all(appLoadPromises).then(() => {
+    apps.forEach(app => {
+      importmaps.imports[app.name] = `${app.url}/${app.mainBundleName}`;
     });
-
-    start();
+    let script = document.createElement('script');
+    script.type = "systemjs-importmap";
+    script.text = JSON.stringify(importmaps);
+    document.head.appendChild(script);
+    System.import('single-spa').then((singleSpa) => {
+      const { registerApplication, start } = singleSpa;
+      apps.forEach((app) => {
+        registerApplication({
+          name: app.name,
+          app: () => System.import(app.name),
+          activeWhen: app.activeWhen
+        });
+      });
+      
+      start();
+    });
   });
-});
+  
+// })

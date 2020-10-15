@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path:'child-one/test',
     component: childOneTestComponent
+  },
+  {
+    path:'**',
+    redirectTo: "/home"
   }
 ];
 
