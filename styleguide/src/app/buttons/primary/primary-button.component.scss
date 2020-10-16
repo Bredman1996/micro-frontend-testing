@@ -1,5 +1,14 @@
 button{
+    min-width: 150px;
+    min-height: 40px;
     background-color: var(--primary-color);
-    width: 200px;
-    height: 40px;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    &:hover{
+        background-color: var(--accent-color);
+    }
+    &:focus{
+        outline: none;
+    }
 }
