@@ -1,13 +1,19 @@
-
 let apps =
   [
     {
-      "name": "child-one",
-      "activeWhen":"/child-one",
-      "url": "http://localhost:4201/",
-      "bundleMapsUrl":"http://localhost:4201/assets/bundle-maps.json",
+      "name": "styleguide",
+      "activeWhen": "/",
+      "url": "http://localhost:4202/",
+      "bundleMapsUrl": "http://localhost:4202/assets/bundle-maps.json",
       "mainBundleName": ""
-    }
+    },
+    {
+      "name": "child-one",
+      "activeWhen": "/child-one",
+      "url": "http://localhost:4201/",
+      "bundleMapsUrl": "http://localhost:4201/assets/bundle-maps.json",
+      "mainBundleName": ""
+    },
   ];
 
 let appLoadPromises = [];
@@ -25,43 +31,42 @@ apps.forEach((appInfo) => {
     xmlHttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         let bundleMaps = JSON.parse(xmlHttp.responseText);
-        console.log(bundleMaps.main);
         appInfo.mainBundleName = bundleMaps.main;
         resolve();
       }
     };
   }))
-})
+});
 
 let importmaps = {
-  "imports":{
+  "imports": {
 
   }
 }
 
-Promise.all(appLoadPromises).then(() => {
-  apps.forEach(app => {
-    importmaps.imports[app.name] = `${app.url}/${app.mainBundleName}`;
-  });
-  let script = document.createElement('script');
-  script.type = "systemjs-importmap";
-  script.text = JSON.stringify(importmaps);
-  document.head.appendChild(script);
-  System.import('single-spa').then((singleSpa) => {
-    const { registerApplication, start } = singleSpa;
-    registerApplication({
-      name: 'styleguide',
-      app: () => System.import('styleguide'),
-      activeWhen: "/"
+// System.import('angularCommon').then((m) => {
+//   console.log(m);
+//   System.register('@angular/common', m);
+  Promise.all(appLoadPromises).then(() => {
+    apps.forEach(app => {
+      importmaps.imports[app.name] = `${app.url}/${app.mainBundleName}`;
     });
-    apps.forEach( (app) => {
-      registerApplication({
-        name: app.name,
-        app: () => System.import(app.name),
-        activeWhen: app.activeWhen
+    let script = document.createElement('script');
+    script.type = "systemjs-importmap";
+    script.text = JSON.stringify(importmaps);
+    document.head.appendChild(script);
+    System.import('single-spa').then((singleSpa) => {
+      const { registerApplication, start } = singleSpa;
+      apps.forEach((app) => {
+        registerApplication({
+          name: app.name,
+          app: () => System.import(app.name),
+          activeWhen: app.activeWhen
+        });
       });
+      
+      start();
     });
-
-    start();
   });
-});
+  
+// })
